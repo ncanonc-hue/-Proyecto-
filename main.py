@@ -96,7 +96,7 @@ def ver_historial():
     for cliente in historial_clientes:
         text_area.insert(
             tk.END,
-            f"👤 {cliente['nombre']} - Pedido: {', '.join(cliente['pedido'])} | Total: ${cliente['total']:.2f}\n"
+            f" {cliente['nombre']} - Pedido: {', '.join(cliente['pedido'])} | Total: ${cliente['total']:.2f}\n"
         )
 
     text_area.config(state="disabled")
@@ -181,7 +181,7 @@ def ver_diagrama():
         canvas.create_rectangle(x0, y0, x0 + bar_width, y_base2 - 30, fill="#6d4c41", outline="")
         # número encima
         canvas.create_text(x0 + bar_width / 2, y0 - 15, text=str(cantidad), font=("Helvetica", 11, "bold"), fill="#3e2723")
-        # 🔽 nombre del cliente ahora bien visible
+        #  nombre del cliente bien visible
         canvas.create_text(x0 + bar_width / 2, y_base2 - 10, text=cliente, font=("Helvetica", 10, "bold"))
 
 
@@ -268,3 +268,4 @@ threading.Thread(target=mover_taza, daemon=True).start()
 
 # --- INICIAR LA APP ---
 ventana.mainloop()
+
