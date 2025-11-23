@@ -16,7 +16,7 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
    ![Imagen de WhatsApp 2025-11-03 a las 11 49 12_77589ce0](https://github.com/user-attachments/assets/fe302409-e51e-4049-8e95-4f3298f28e90)
 
-   esto es causado porque no contamos con el pillow y tampoco con pygame descargada en la ruta.
+   esto es causado porque no contamos con el pillow, pygame, panda y matplotlib los cuales son librerias importantes para que funcione el codigo.
 
    Abrimos powershell como administrador, tenemos que copiar el codigo amarillo que nos deja el output en visual studio y añadirle -m pip install pygame, en mi caso
 
@@ -24,13 +24,15 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
    Ejecutamos y esperamos a que se descargue 
 
-   Volvemos a repetir lo mismo pero al final -m pip install Pillow, en mi caso seria:
+   Repetimos lo mismo con al final -m pip install Pillow, en mi caso seria:
 
    C:/Users/marco/AppData/Local/Programs/Python/Python312/python.exe -m pip install Pillow
 
+   Hacemos exactamente lo mismo pero al final  "py -3.12 -m pip install pandas" y tambien con "py -3.12 -m pip install matplotlib"
+
    
 
-   De esta forma ya tendriamos descargados estos dos archivos que son necesarios para que el codigo pueda ejecutarse correctamente.
+   De esta forma ya tendriamos descargados estos archivos que son necesarios para que el codigo pueda ejecutarse correctamente.
    
 
 
@@ -40,7 +42,7 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
    <img width="1430" height="769" alt="image" src="https://github.com/user-attachments/assets/1c1e5110-9468-4427-875d-7ad4dd368fb8" />
 
-6. Agregamos      py -3.12 "main.py"      y abrimos el archivo
+6. Agregamos      py -3.12 "main.py"  damos doble enter y abrimos el archivo
 
    <img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/4d315598-e07a-47c7-af46-552c73305405" />
 
