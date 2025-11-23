@@ -8,9 +8,14 @@ import time
 import os
 from collections import Counter
 
+# Librerías nuevas requeridas por la entrega
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # --- CONFIGURACIÓN DE SONIDO ---
 try:
     pygame.mixer.init()
+    # nombre del archivo de audio (asegúrate que esté en la misma carpeta)
     pygame.mixer.music.load("cafe-music-163375.mp3")
     pygame.mixer.music.play(-1)
     print("🎵 Música de fondo iniciada correctamente.")
@@ -31,16 +36,36 @@ total_actual = 0.0
 num_pedido = 0
 historial_clientes = []  # lista de diccionarios con nombre, pedido y total
 
+CSV_FILENAME = "historial_cafe_unal.csv"
+
 
 # --- FUNCIONES ---
 def agregar_producto(producto):
+    """Agrega un producto a la orden actual y actualiza el total en consola."""
     global total_actual
     pedido_actual.append(producto)
     total_actual += menu[producto]
     print(f"Añadido: {producto.upper()} | Total actual: ${total_actual:.2f}")
 
 
+def guardar_historial_csv():
+    """Guarda el historial_clientes a CSV usando pandas (convierte listas de 'pedido' a strings)."""
+    try:
+        if not historial_clientes:
+            # Si no hay datos, borrar el archivo si existe o no hacer nada.
+            return
+        df = pd.DataFrame(historial_clientes)
+        # Convertir listas a cadena para facilitar lectura en CSV
+        if "pedido" in df.columns:
+            df["pedido"] = df["pedido"].apply(lambda lst: ";".join(lst) if isinstance(lst, list) else str(lst))
+        df.to_csv(CSV_FILENAME, index=False)
+        print(f"Historial guardado en {CSV_FILENAME}")
+    except Exception as e:
+        print("Error guardando CSV:", e)
+
+
 def mostrar_total():
+    """Finaliza el pedido: pide nombre, registra en historial, guarda CSV y muestra confirmación."""
     global total_actual, pedido_actual, num_pedido, historial_clientes
     if pedido_actual:
         nombre_cliente = simpledialog.askstring("Nombre del cliente", "Por favor, ingresa tu nombre:")
@@ -49,18 +74,22 @@ def mostrar_total():
             print(f"Pedido #{num_pedido} → {pedido_actual} | Total: ${total_actual:.2f}")
             print(f"Cliente: {nombre_cliente} ☕✨")
 
-            # Guardar en historial
+            # Guardar en historial (almacen en memoria)
             historial_clientes.append({
                 "nombre": nombre_cliente,
                 "pedido": pedido_actual.copy(),
                 "total": total_actual
             })
 
+            # Guardar CSV actualizado
+            guardar_historial_csv()
+
             messagebox.showinfo(
                 "Pedido completado",
                 f"Gracias por tu compra, {nombre_cliente}!\n\nTotal: ${total_actual:.2f}"
             )
 
+            # Reset de la orden en memoria (para nueva orden)
             total_actual = 0.0
             pedido_actual = []
         else:
@@ -70,6 +99,7 @@ def mostrar_total():
 
 
 def resetear_orden():
+    """Reinicia la orden actual (no afecta el historial guardado)."""
     global total_actual, pedido_actual
     pedido_actual = []
     total_actual = 0.0
@@ -78,32 +108,38 @@ def resetear_orden():
 
 
 def ver_historial():
-    """Muestra una ventana con el historial de clientes"""
+    """Muestra una ventana con el historial de clientes (lectura desde memoria)."""
     if not historial_clientes:
         messagebox.showinfo("Historial vacío", "Aún no hay clientes registrados.")
         return
 
     historial_win = tk.Toplevel(ventana)
     historial_win.title("Historial de Clientes")
-    historial_win.geometry("450x350")
+    historial_win.geometry("500x380")
     historial_win.configure(bg="#f8f4ed")
 
     ttk.Label(historial_win, text="Historial de Clientes", font=("Helvetica", 16, "bold")).pack(pady=10)
 
-    text_area = tk.Text(historial_win, wrap="word", height=15, width=55)
+    text_area = tk.Text(historial_win, wrap="word", height=15, width=60)
     text_area.pack(padx=10, pady=10)
 
     for cliente in historial_clientes:
+        pedido_str = ", ".join(cliente['pedido']) if isinstance(cliente['pedido'], list) else str(cliente['pedido'])
         text_area.insert(
             tk.END,
-            f" {cliente['nombre']} - Pedido: {', '.join(cliente['pedido'])} | Total: ${cliente['total']:.2f}\n"
+            f"{cliente['nombre']} - Pedido: {pedido_str} | Total: ${cliente['total']:.2f}\n"
         )
 
     text_area.config(state="disabled")
 
 
 def ver_diagrama():
-    
+    """
+    Función existente que dibuja dos gráficos sencillos en un Canvas:
+    - Productos más vendidos (barras)
+    - Productos comprados por cliente (barras)
+    Sigue usando los datos en memoria (historial_clientes).
+    """
     if not historial_clientes:
         messagebox.showinfo("Sin datos", "Aún no hay información para graficar.")
         return
@@ -185,6 +221,33 @@ def ver_diagrama():
         canvas.create_text(x0 + bar_width / 2, y_base2 - 10, text=cliente, font=("Helvetica", 10, "bold"))
 
 
+def ver_grafico_matplotlib():
+    """
+    Genera un gráfico profesional con Matplotlib mostrando los productos más vendidos.
+    Usa pandas internamente para procesar los datos (aunque la fuente principal es historial_clientes).
+    """
+    if not historial_clientes:
+        messagebox.showinfo("Sin datos", "Aún no hay compras registradas.")
+        return
+
+    try:
+        df = pd.DataFrame(historial_clientes)
+        # Expandir la columna "pedido" (que es lista) y contar valores
+        productos = []
+        for lista in df["pedido"]:
+            productos.extend(lista)
+        conteo = pd.Series(productos).value_counts()
+
+        plt.figure(figsize=(8, 5))
+        conteo.plot(kind="bar")
+        plt.title("Productos más vendidos - Café UNAL")
+        plt.xlabel("Producto")
+        plt.ylabel("Cantidad Vendida")
+        plt.tight_layout()
+        plt.show()
+    except Exception as e:
+        messagebox.showerror("Error al generar gráfico", f"Ocurrió un error: {e}")
+
 
 # --- CONFIGURACIÓN DE LA VENTANA PRINCIPAL ---
 ventana = tk.Tk()
@@ -204,7 +267,7 @@ try:
     logo_label = tk.Label(poster_frame, image=logo_photo, bg="#f7f3ed")
     logo_label.image = logo_photo
     logo_label.pack(pady=(10, 5))
-except:
+except Exception:
     logo_label = tk.Label(poster_frame, text="☕", font=("Helvetica", 60), bg="#f7f3ed")
     logo_label.pack(pady=(10, 5))
 
@@ -239,6 +302,7 @@ extra_frame.pack(pady=15)
 
 ttk.Button(extra_frame, text="📜 Ver Historial de Clientes", command=ver_historial).grid(row=0, column=0, padx=10)
 ttk.Button(extra_frame, text="📊 Ver Diagrama de Ventas", command=ver_diagrama).grid(row=0, column=1, padx=10)
+ttk.Button(extra_frame, text="📈 Ver gráfico (Matplotlib)", command=ver_grafico_matplotlib).grid(row=1, column=0, padx=10, pady=6)
 
 # --- ANIMACIÓN DE TAZA ---
 try:
@@ -246,7 +310,7 @@ try:
     taza_photo = ImageTk.PhotoImage(taza_img)
     taza_label = tk.Label(ventana, image=taza_photo, bg="#f5f0e6")
     taza_label.place(x=0, y=500)
-except:
+except Exception:
     taza_label = tk.Label(ventana, text="☕", font=("Arial", 40), bg="#f5f0e6")
     taza_label.place(x=0, y=500)
 
@@ -267,5 +331,23 @@ def mover_taza():
 threading.Thread(target=mover_taza, daemon=True).start()
 
 # --- INICIAR LA APP ---
+# Si existe CSV previo, opcionalmente podemos precargarlo al iniciar para tener historial persistente:
+if os.path.exists(CSV_FILENAME):
+    try:
+        df_prev = pd.read_csv(CSV_FILENAME)
+        # Intentar reconstruir historial_clientes desde CSV (la columna 'pedido' está como "a;b;c")
+        historial_clientes = []
+        for _, row in df_prev.iterrows():
+            pedidos = []
+            if "pedido" in row and not pd.isna(row["pedido"]):
+                # esperar formato "item1;item2;item3"
+                pedidos = [p for p in str(row["pedido"]).split(";") if p != ""]
+            nombre = row["nombre"] if "nombre" in row and not pd.isna(row["nombre"]) else "Anónimo"
+            total = float(row["total"]) if "total" in row and not pd.isna(row["total"]) else 0.0
+            historial_clientes.append({"nombre": nombre, "pedido": pedidos, "total": total})
+        print(f"Se cargaron {len(historial_clientes)} registros desde {CSV_FILENAME}")
+    except Exception as e:
+        print("No se pudo cargar historial previo:", e)
+
 ventana.mainloop()
 
