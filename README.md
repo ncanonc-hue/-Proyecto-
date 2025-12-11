@@ -15,14 +15,19 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
 3. Abrimos el terminal de la carpeta y ponemos los siguientes codigos para descargar las librerias y programas necesarios para la correcta ejecucion del codigo
 
-   pip install PyQt5
-   pip install pandas
+               pip install PyQt5                                                                      pip install pandas
+
+   <img width="1906" height="988" alt="image" src="https://github.com/user-attachments/assets/183aec66-0832-45e2-9ccc-42029a94f515" />
+
 
 
    De esta forma ya tendriamos descargados estos archivos que son necesarios para que el codigo pueda ejecutarse correctamente.
      
 
-4. Desde el mismo terminal ejecutamos " py -3.12 "hub.py" " con este codigo empezara a funcionar el codigo y mostrara el hub.
+5. Desde el mismo terminal ejecutamos " py -3.12 "hub.py" " con este codigo empezara a funcionar el codigo y mostrara el hub.
+
+   <img width="1919" height="1017" alt="image" src="https://github.com/user-attachments/assets/a79bef74-bb12-48eb-9124-39a17d5d78e6" />
+
 
    
 
