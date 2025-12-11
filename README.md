@@ -15,8 +15,10 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
 3. Abrimos el terminal de la carpeta y ponemos los siguientes codigos para descargar las librerias y programas necesarios para la correcta ejecucion del codigo
 
-               py -3.12 -m pip install pandas
-                                                                                py -3.12 -m pip install PyQt5
+               py -3.12 -m pip install pandas     py -3.12 -m pip install PyQt5   py -3.12 -m pip install matplotlib    py -3.12 -m pip install pygame   py -3.12 -m pip install Pillow
+
+
+
 
 
    <img width="1906" height="988" alt="image" src="https://github.com/user-attachments/assets/183aec66-0832-45e2-9ccc-42029a94f515" />
