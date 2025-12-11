@@ -1,6 +1,6 @@
 INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
-1. Descarga los archivos que estan subidos en el GitHub.
+1. Descarga los archivos que estan subidos en el GitHub.                        IMPORTANTE: TENEMOS QUE TENER LA VERSION 3.12.9 DE PYTHON 
 
 
 <img width="1067" height="319" alt="image" src="https://github.com/user-attachments/assets/727aaeee-d4d0-4db4-917f-1d396bdb2e17" />
