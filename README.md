@@ -1,9 +1,10 @@
 INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
-1. Descarga los tres archivos que estan subidos en el GitHub.
+1. Descarga los archivos que estan subidos en el GitHub.
 
 
- <img width="973" height="153" alt="image" src="https://github.com/user-attachments/assets/2b60156b-6b12-466e-b60c-e8a2c1f2b99f" />
+<img width="1067" height="319" alt="image" src="https://github.com/user-attachments/assets/727aaeee-d4d0-4db4-917f-1d396bdb2e17" />
+
 
 
 2. Lo añadimos a una carpeta creada en el escritorio.
@@ -12,54 +13,18 @@ INSTRUCCIONES PARA ABRIR EL ARCHIVO CORRECTAMENTE
 
 
 
-3. Abrimos el "main.py" desde visual studio code, con la version 3.12.9 de python (si no la tenenemos la descargamos desde la pagina oficial), generalmente aparecera este error
+3. Abrimos el terminal de la carpeta y ponemos los siguientes codigos para descargar las librerias y programas necesarios para la correcta ejecucion del codigo
 
-   ![Imagen de WhatsApp 2025-11-03 a las 11 49 12_77589ce0](https://github.com/user-attachments/assets/fe302409-e51e-4049-8e95-4f3298f28e90)
+   pip install PyQt5
+   pip install pandas
 
-   esto es causado porque no contamos con el pillow, pygame, panda y matplotlib los cuales son librerias importantes para que funcione el codigo.
-
-   Abrimos powershell como administrador, tenemos que copiar el codigo amarillo que nos deja el output en visual studio y añadirle -m pip install pygame, en mi caso
-
-   C:/Users/marco/AppData/Local/Programs/Python/Python312/python.exe -m pip install pygame
-
-   Ejecutamos y esperamos a que se descargue 
-
-   Repetimos lo mismo con al final -m pip install Pillow, en mi caso seria:
-
-   C:/Users/marco/AppData/Local/Programs/Python/Python312/python.exe -m pip install Pillow
-
-   Hacemos exactamente lo mismo pero al final  "py -3.12 -m pip install pandas" y tambien con "py -3.12 -m pip install matplotlib"
-
-   
 
    De esta forma ya tendriamos descargados estos archivos que son necesarios para que el codigo pueda ejecutarse correctamente.
+     
+
+4. Desde el mismo terminal ejecutamos " py -3.12 "hub.py" " con este codigo empezara a funcionar el codigo y mostrara el hub.
+
    
-
-
-    
-
-5. Abrir la carpeta desde el terminal
-
-   <img width="1430" height="769" alt="image" src="https://github.com/user-attachments/assets/1c1e5110-9468-4427-875d-7ad4dd368fb8" />
-
-6. Agregamos      py -3.12 "main.py"  damos doble enter y abrimos el archivo
-
-   <img width="1918" height="1075" alt="image" src="https://github.com/user-attachments/assets/4d315598-e07a-47c7-af46-552c73305405" />
-
-Y de esta forma tendriamos el codigo con musica y mejor estetica  C:
-
-
-
-
-
-
-
-
-EN EL CASO DE QUE HAYA ALGUN INCONVENIENTE ABRIENDO EL ANTERIOR CODIGO 
-
-1. Simplemente abrimos el archivo "main.py" en visual studio con pygame y pillow descargado como indicamos en las primeras instrucciones, este no tendra musica pero funcionara de igual forma que el anterior
-
-<img width="1919" height="1023" alt="image" src="https://github.com/user-attachments/assets/15b9fce2-96cc-41d5-9464-8c3ce4306dbd" />
 
 
    MUCHAS GRACIAS POR TU ATENCION.
